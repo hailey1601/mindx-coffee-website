@@ -1,4 +1,9 @@
 {
+  "scripts": {
+    "seed": "npm run seed --prefix BE",
+    "dev:be": "npm run dev --prefix BE",
+    "dev:fe": "npm run dev --prefix FE"
+  },
   "dependencies": {
     "bcryptjs": "^3.0.3",
     "jsonwebtoken": "^9.0.3"
