@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authApi } from '@/modules/auth/api/auth.api';
 import { tokenStore } from '@/modules/auth/store/token.store';
@@ -18,7 +18,7 @@ export const ProfilePage = () => {
   const [user, setUser] = useState<ProfileUser | null>(null);
   const navigate = useNavigate();
 
-  const fetchUser = async () => {
+  const fetchUser = useCallback(async () => {
     try {
       const res = await authApi.getMe();
       setUser(res.data as ProfileUser);
@@ -26,11 +26,11 @@ export const ProfilePage = () => {
       tokenStore.clear();
       navigate('/logout');
     }
-  };
+  }, [navigate]);
 
   useEffect(() => {
     void fetchUser();
-  }, []);
+  }, [fetchUser]);
 
   const initials = user?.email?.slice(0, 2).toUpperCase() ?? '??';
 

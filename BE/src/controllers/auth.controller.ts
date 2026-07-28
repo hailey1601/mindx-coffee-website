@@ -52,7 +52,7 @@ export const verifyLoginOtp = async (req: Request, res: Response) => {
   user.otpExpiresAt = undefined;
   await user.save();
 
-  const token = signToken({ sub: String(user._id), email: user.email });
+  const token = signToken({ sub: String(user._id), email: user.email, role: user.role });
   return res.json({ token });
 };
 
@@ -87,3 +87,23 @@ export const getMe = async (req: Request, res: Response) => {
   if (!user) return res.status(404).json({ message: 'User not found' });
   return res.json(user);
 };
+
+export const promoteToAdmin = async (req: Request, res: Response) => {
+  const { email } = req.body as { email?: string };
+  const targetEmail = email || req.user?.email;
+
+  if (!targetEmail) {
+    return res.status(400).json({ message: 'Email là bắt buộc' });
+  }
+
+  const user = await UserModel.findOne({ email: targetEmail.toLowerCase() });
+  if (!user) {
+    return res.status(404).json({ message: `Không tìm thấy người dùng với email: ${targetEmail}` });
+  }
+
+  user.role = 'admin';
+  await user.save();
+
+  return res.json({ message: `Đã nâng cấp tài khoản ${user.email} thành Admin thành công!`, role: user.role });
+};
+

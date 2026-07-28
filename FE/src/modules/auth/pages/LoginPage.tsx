@@ -8,7 +8,6 @@ import { toast } from 'sonner';
 import { authApi } from '../api/auth.api';
 import { tokenStore } from '../store/token.store';
 import { Button } from '@/shared/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/shared/components/ui/card';
 import { Input } from '@/shared/components/ui/input';
 import { Label } from '@/shared/components/ui/label';
 import { OtpInput } from '@/shared/components/ui/otp-input';

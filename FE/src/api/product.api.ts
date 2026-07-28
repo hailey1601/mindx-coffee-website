@@ -36,6 +36,7 @@ export interface UpdateProductPayload {
 export interface ProductQueryParams {
   search?: string;
   category?: 'Beans' | 'Tools' | 'Tech' | string;
+  status?: string;
 }
 
 export const productApi = {

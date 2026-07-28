@@ -3,6 +3,7 @@ import mongoose, { Schema } from 'mongoose';
 export interface UserDocument extends mongoose.Document {
   email: string;
   password: string;
+  role: 'user' | 'admin';
   isEmailVerified: boolean;
   otpCode?: string;
   otpExpiresAt?: Date;
@@ -18,6 +19,7 @@ const userSchema = new Schema<UserDocument>(
   {
     email: { type: String, required: true, unique: true, trim: true, lowercase: true },
     password: { type: String, required: true },
+    role: { type: String, enum: ['user', 'admin'], default: 'user' },
     isEmailVerified: { type: Boolean, default: false },
     otpCode: { type: String },
     otpExpiresAt: { type: Date },

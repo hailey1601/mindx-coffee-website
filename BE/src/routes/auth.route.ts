@@ -3,6 +3,7 @@ import {
   forgotPassword,
   getMe,
   login,
+  promoteToAdmin,
   register,
   resetPassword,
   verifyLoginOtp,
@@ -27,3 +28,5 @@ authRouter.post('/login/verify-otp', validateBody(otpSchema), verifyLoginOtp);
 authRouter.post('/forgot-password', validateBody(forgotPasswordSchema), forgotPassword);
 authRouter.post('/reset-password', validateBody(resetPasswordSchema), resetPassword);
 authRouter.get('/me', authGuard, getMe);
+authRouter.post('/promote-admin', promoteToAdmin);
+

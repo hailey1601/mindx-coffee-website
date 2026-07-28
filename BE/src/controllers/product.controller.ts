@@ -25,12 +25,20 @@ export const createProduct = async (req: Request, res: Response) => {
 // 2. KHÁCH HÀNG & ADMIN: Xem danh sách sản phẩm (Có bộ lọc category và ô tìm kiếm)
 export const getProducts = async (req: Request, res: Response) => {
   try {
-    const { search, category } = req.query;
-    let query: any = { status: 'active' }; // Mặc định chỉ lấy sản phẩm đang bán
+    const { search, category, status } = req.query;
+    let query: any = {};
+
+    if (status) {
+      if (status !== 'all') {
+        query.status = status;
+      }
+    } else {
+      query.status = 'active'; // Mặc định khách hàng chỉ thấy sản phẩm active
+    }
 
     // Nếu khách gõ tìm kiếm tên sản phẩm
     if (search) {
-      query.name = { $regex: search, $options: 'i' }; // Tìm kiếm không phân biệt chữ hoa chữ thường
+      query.name = { $regex: search, $options: 'i' };
     }
 
     // Nếu khách bấm lọc theo danh mục (Beans / Tools / Tech)
@@ -38,7 +46,7 @@ export const getProducts = async (req: Request, res: Response) => {
       query.category = category;
     }
 
-    const products = await ProductModel.find(query).sort({ createdAt: -1 }); // Sản phẩm mới đăng hiện lên trước
+    const products = await ProductModel.find(query).sort({ createdAt: -1 });
     return res.json(products);
   } catch (error: any) {
     return res.status(500).json({ message: 'Lỗi khi lấy danh sách sản phẩm', error: error.message });

@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react';
-import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { Coffee, LogOut, ShieldCheck } from 'lucide-react';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Coffee, LogOut, ShieldCheck, ShoppingBag } from 'lucide-react';
 import { authApi } from '@/modules/auth/api/auth.api';
 import { tokenStore } from '@/modules/auth/store/token.store';
+import { cartStore } from '@/modules/cart/store/cart.store';
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/components/ui/avatar';
 import { Button } from '@/shared/components/ui/button';
 import type { CurrentUser } from '@/modules/auth/types/auth.types';
 
 export const AppLayout = () => {
   const [user, setUser] = useState<CurrentUser | null>(null);
-  const location = useLocation();
+  const [cartCount, setCartCount] = useState<number>(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,6 +20,16 @@ export const AppLayout = () => {
         tokenStore.clear();
         navigate('/login');
       });
+
+    const updateCount = () => {
+      const items = cartStore.get();
+      const count = items.reduce((sum, item) => sum + item.quantity, 0);
+      setCartCount(count);
+    };
+
+    updateCount();
+    window.addEventListener('cart-change', updateCount);
+    return () => window.removeEventListener('cart-change', updateCount);
   }, [navigate]);
 
   const handleLogout = () => {
@@ -50,6 +61,28 @@ export const AppLayout = () => {
 
           {/* User Actions */}
           <div className="flex items-center gap-4">
+            {user?.role === 'admin' && (
+              <Link
+                to="/admin"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-100/80 text-amber-900 hover:bg-amber-200 border border-amber-300 text-xs font-bold transition-all shadow-sm"
+              >
+                <ShieldCheck className="size-4 text-coffee-amber" />
+                <span>Admin Portal</span>
+              </Link>
+            )}
+
+            <Link 
+              to="/cart" 
+              className="relative p-2 text-stone-600 hover:text-coffee-amber hover:bg-coffee-latte/40 rounded-full transition-all duration-300 mr-1"
+            >
+              <ShoppingBag className="size-5" />
+              {cartCount > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 flex size-4 items-center justify-center rounded-full bg-coffee-amber text-[9px] font-bold text-white ring-2 ring-coffee-bg animate-scale-in">
+                  {cartCount}
+                </span>
+              )}
+            </Link>
+
             <Link to="/profile" className="flex items-center gap-2 hover:text-coffee-amber transition-all">
               <Avatar className="size-8 border border-coffee-latte">
                 <AvatarImage src={user?.avatarUrl} alt={user?.email} />

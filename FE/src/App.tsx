@@ -8,6 +8,10 @@ import { ForgotPasswordPage } from '@/modules/auth/pages/ForgotPasswordPage';
 import { LogoutPage } from '@/modules/auth/pages/LogoutPage';
 import { HomePage } from '@/modules/home/pages/HomePage';
 import { ProfilePage } from '@/modules/profile/pages/ProfilePage';
+import { CartPage } from '@/modules/cart/pages/CartPage';
+
+import { AdminRoute } from '@/modules/auth/components/AdminRoute';
+import { AdminDashboardPage } from '@/modules/admin/pages/AdminDashboardPage';
 
 function App() {
   return (
@@ -20,11 +24,17 @@ function App() {
       </Route>
       <Route path="/logout" element={<LogoutPage />} />
 
-      {/* Protected routes */}
+      {/* Protected user routes */}
       <Route element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
         <Route path="/" element={<HomePage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/cart" element={<CartPage />} />
         <Route path="/me" element={<Navigate to="/profile" replace />} />
+      </Route>
+
+      {/* Admin routes */}
+      <Route element={<AdminRoute><AppLayout /></AdminRoute>}>
+        <Route path="/admin" element={<AdminDashboardPage />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/login" replace />} />

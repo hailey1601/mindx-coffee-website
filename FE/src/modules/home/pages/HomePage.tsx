@@ -1,20 +1,17 @@
 import { useEffect, useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { 
   Coffee, 
-  ShoppingBag, 
   ChevronRight, 
   ArrowRight, 
   Heart, 
   Star, 
   Sparkles, 
-  Plus, 
-  Search
+  Plus
 } from 'lucide-react';
-import { authApi } from '@/modules/auth/api/auth.api';
 import { productApi, type Product as ApiProduct } from '@/api/product.api';
+import { cartStore } from '@/modules/cart/store/cart.store';
 import { toast } from 'sonner';
-import type { CurrentUser } from '@/modules/auth/types/auth.types';
 
 const mockProductsMapped: ApiProduct[] = [
   {
@@ -79,8 +76,6 @@ const getProductBadge = (category: string, name: string) => {
 };
 
 export const HomePage = () => {
-  const [user, setUser] = useState<CurrentUser | null>(null);
-  const [cartCount, setCartCount] = useState<number>(2);
   const [favorites, setFavorites] = useState<string[]>([]);
   const [emailInput, setEmailInput] = useState('');
 
@@ -90,10 +85,6 @@ export const HomePage = () => {
   const selectedCategory = searchParams.get('category') || 'all';
 
   useEffect(() => {
-    authApi.getMe()
-      .then((res) => setUser(res.data as CurrentUser))
-      .catch(() => {});
-
     productApi.getProducts()
       .then((res) => {
         setProducts(res.data);
@@ -122,9 +113,9 @@ export const HomePage = () => {
     }, 100);
   };
 
-  const handleAddToCart = (productName: string) => {
-    setCartCount(prev => prev + 1);
-    toast.success(`Added ${productName} to cart!`, {
+  const handleAddToCart = (product: ApiProduct) => {
+    cartStore.add(product);
+    toast.success(`Added ${product.name} to cart!`, {
       description: 'Your cart has been updated.',
       position: 'bottom-right',
     });
@@ -149,8 +140,6 @@ export const HomePage = () => {
     });
     setEmailInput('');
   };
-
-  const displayName = user?.displayName || user?.email?.split('@')[0] || 'Coffee Lover';
 
   const displayProducts = products.length > 0 ? products : mockProductsMapped;
 
@@ -381,7 +370,7 @@ export const HomePage = () => {
                     <div className="flex items-center justify-between pt-3 border-t border-coffee-latte mt-3">
                       <span className="font-bold text-sm text-coffee-dark">${product.price.toFixed(2)}</span>
                       <button 
-                        onClick={() => handleAddToCart(product.name)}
+                        onClick={() => handleAddToCart(product)}
                         className="p-2 rounded-full bg-coffee-latte/50 hover:bg-coffee-amber hover:text-white text-coffee-dark transition-all duration-300 shadow-sm"
                       >
                         <Plus className="size-4" />
