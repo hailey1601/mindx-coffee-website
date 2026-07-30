@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
+import { useTranslation } from '@/shared/lib/i18n';
 import { 
   Coffee, 
   ChevronRight, 
@@ -77,6 +78,7 @@ const getProductBadge = (category: string, name: string) => {
 };
 
 export const HomePage = () => {
+  const { t } = useTranslation();
   const [favorites, setFavorites] = useState<string[]>([]);
   const [emailInput, setEmailInput] = useState('');
 
@@ -161,25 +163,25 @@ export const HomePage = () => {
               Specialty Coffee Shop
             </div>
             <h1 className="text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight font-serif text-coffee-dark">
-              CRAFT. BREW. SAVOR.<br />
-              <span className="text-coffee-amber">Elevated Coffee & Gear.</span>
+              {t('heroTitle')}<br />
+              <span className="text-coffee-amber">{t('heroSubtitle')}</span>
             </h1>
             <p className="text-stone-600 max-w-md text-sm md:text-base leading-relaxed">
-              Discover curated, ethically sourced single-origin beans, precision brewing tools, and modern coffee tech crafted for coffee lovers.
+              {t('heroDesc')}
             </p>
             <div className="flex flex-wrap gap-4">
               <a 
                 href="#products" 
                 className="inline-flex items-center justify-center bg-coffee-dark hover:bg-coffee-amber text-coffee-bg font-semibold px-6 py-3 rounded-full text-sm transition-all duration-300 transform hover:scale-[1.02] shadow-sm hover:shadow-md gap-2"
               >
-                SHOP ALL PRODUCTS
+                {t('btnShopAll')}
                 <ArrowRight className="size-4" />
               </a>
               <a 
                 href="#subscriptions" 
                 className="inline-flex items-center justify-center border border-coffee-dark hover:border-coffee-amber hover:text-coffee-amber text-coffee-dark font-semibold px-6 py-3 rounded-full text-sm transition-colors duration-300"
               >
-                Coffee Club Subscriptions
+                {t('btnSubClub')}
               </a>
             </div>
           </div>
@@ -204,7 +206,7 @@ export const HomePage = () => {
 
       {/* Bento Grid Layout for Product Categories */}
       <section className="mb-16">
-        <h2 className="text-2xl font-bold font-serif mb-8 text-center md:text-left">Browse by Category</h2>
+        <h2 className="text-2xl font-bold font-serif mb-8 text-center md:text-left">{t('browseCategory')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           
           {/* Category 1: Beans */}
@@ -214,8 +216,8 @@ export const HomePage = () => {
           >
             <div>
               <span className="text-xs font-bold text-coffee-amber tracking-widest uppercase">Organic Roasts</span>
-              <h3 className="text-2xl font-bold font-serif mt-2 mb-2 text-coffee-dark">EXPLORE BEANS</h3>
-              <p className="text-xs text-stone-600">Single-origin beans, custom light/medium roasts, and customizable recurring subscription options.</p>
+              <h3 className="text-2xl font-bold font-serif mt-2 mb-2 text-coffee-dark">{t('beansCategoryTitle')}</h3>
+              <p className="text-xs text-stone-600">{t('beansCategoryDesc')}</p>
             </div>
             <div className="relative my-4 h-[120px] overflow-hidden rounded-xl">
               <img 
@@ -236,8 +238,8 @@ export const HomePage = () => {
           >
             <div>
               <span className="text-xs font-bold text-coffee-amber tracking-widest uppercase">Manual Brewing</span>
-              <h3 className="text-2xl font-bold font-serif mt-2 mb-2 text-coffee-dark">ESSENTIAL TOOLS</h3>
-              <p className="text-xs text-stone-600">Precision kettles, drippers, scales, and filtration tools for the dedicated home barista.</p>
+              <h3 className="text-2xl font-bold font-serif mt-2 mb-2 text-coffee-dark">{t('toolsCategoryTitle')}</h3>
+              <p className="text-xs text-stone-600">{t('toolsCategoryDesc')}</p>
             </div>
             <div className="relative my-4 h-[120px] overflow-hidden rounded-xl">
               <img 
@@ -258,8 +260,8 @@ export const HomePage = () => {
           >
             <div>
               <span className="text-xs font-bold text-coffee-amber tracking-widest uppercase">Advanced Brew</span>
-              <h3 className="text-2xl font-bold font-serif mt-2 mb-2 text-coffee-dark">BREWING TECH</h3>
-              <p className="text-xs text-stone-600">Smart scales, commercial-grade home grinders, and temperature-controlled brewing tech.</p>
+              <h3 className="text-2xl font-bold font-serif mt-2 mb-2 text-coffee-dark">{t('techCategoryTitle')}</h3>
+              <p className="text-xs text-stone-600">{t('techCategoryDesc')}</p>
             </div>
             <div className="relative my-4 h-[120px] overflow-hidden rounded-xl">
               <img 
@@ -280,8 +282,8 @@ export const HomePage = () => {
       <section id="products" className="mb-16">
         <div className="flex flex-col sm:flex-row items-center justify-between mb-8">
           <div className="text-center sm:text-left">
-            <h2 className="text-2xl font-bold font-serif text-coffee-dark">New Arrivals</h2>
-            <p className="text-xs text-stone-500 mt-1">Freshly roasted selections and newly launched brewing accessories.</p>
+            <h2 className="text-2xl font-bold font-serif text-coffee-dark">{t('newArrivals')}</h2>
+            <p className="text-xs text-stone-500 mt-1">{t('newArrivalsDesc')}</p>
           </div>
           
           {/* Category Filter Buttons */}
@@ -296,7 +298,7 @@ export const HomePage = () => {
                     : 'bg-white text-stone-600 border-stone-200 hover:border-coffee-amber hover:text-coffee-amber'
                 }`}
               >
-                {cat === 'all' ? 'All Products' : cat === 'Beans' ? 'Coffee Beans' : cat === 'Tools' ? 'Brewing Tools' : 'Brewing Tech'}
+                {cat === 'all' ? t('allProducts') : cat === 'Beans' ? t('beansName') : cat === 'Tools' ? t('toolsName') : t('techName')}
               </button>
             ))}
           </div>
@@ -319,7 +321,7 @@ export const HomePage = () => {
         ) : filteredProducts.length === 0 ? (
           <div className="text-center py-12 border border-dashed border-coffee-latte rounded-2xl w-full">
             <Coffee className="size-12 text-stone-300 mx-auto mb-3" />
-            <p className="text-sm text-stone-500 font-semibold">No products found in this category.</p>
+            <p className="text-sm text-stone-500 font-semibold">{t('noProducts')}</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -393,9 +395,9 @@ export const HomePage = () => {
       <section id="subscriptions" className="bg-coffee-dark text-coffee-bg rounded-3xl p-8 md:p-12 mb-16 relative overflow-hidden border border-coffee-dark/80">
         <div className="absolute top-0 right-0 -mt-10 -mr-10 size-40 bg-coffee-amber/10 rounded-full blur-2xl"></div>
         <div className="relative max-w-xl space-y-4">
-          <h2 className="text-2xl md:text-3xl font-bold font-serif">Join the Daily Grind Club</h2>
+          <h2 className="text-2xl md:text-3xl font-bold font-serif">{t('joinClub')}</h2>
           <p className="text-stone-300 text-xs md:text-sm leading-relaxed">
-            Subscribe to our newsletter for exclusive discounts, notifications of new roast drops, and curated brewing guides from champion baristas.
+            {t('joinClubDesc')}
           </p>
           <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-2 pt-2">
             <input 
@@ -410,7 +412,7 @@ export const HomePage = () => {
               type="submit" 
               className="bg-coffee-amber hover:bg-coffee-amber/90 text-white font-semibold text-sm px-6 py-3 rounded-full transition-colors flex items-center justify-center gap-1.5"
             >
-              Subscribe
+              {t('subscribe')}
               <ArrowRight className="size-4" />
             </button>
           </form>

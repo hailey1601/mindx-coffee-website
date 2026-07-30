@@ -7,11 +7,17 @@ import { cartStore } from '@/modules/cart/store/cart.store';
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/components/ui/avatar';
 import { Button } from '@/shared/components/ui/button';
 import type { CurrentUser } from '@/modules/auth/types/auth.types';
+import { useTranslation } from '@/shared/lib/i18n';
 
 export const AppLayout = () => {
+  const { t, lang, setLanguage } = useTranslation();
   const [user, setUser] = useState<CurrentUser | null>(null);
   const [cartCount, setCartCount] = useState<number>(0);
   const navigate = useNavigate();
+
+  const toggleLanguage = () => {
+    setLanguage(lang === 'vi' ? 'en' : 'vi');
+  };
 
   useEffect(() => {
     authApi.getMe()
@@ -53,21 +59,31 @@ export const AppLayout = () => {
 
           {/* Navigation Links */}
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
-            <Link to="/?category=Beans" className="hover:text-coffee-amber transition-colors text-coffee-dark">Shop Beans</Link>
-            <Link to="/?category=Tools" className="hover:text-coffee-amber transition-colors text-coffee-dark">Brewing Tools</Link>
-            <Link to="/?category=Tech" className="hover:text-coffee-amber transition-colors text-coffee-dark">Tech & Gear</Link>
-            <a href="#subscriptions" className="hover:text-coffee-amber transition-colors text-coffee-dark">Subscriptions</a>
+            <Link to="/?category=Beans" className="hover:text-coffee-amber transition-colors text-coffee-dark">{t('navBeans')}</Link>
+            <Link to="/?category=Tools" className="hover:text-coffee-amber transition-colors text-coffee-dark">{t('navTools')}</Link>
+            <Link to="/?category=Tech" className="hover:text-coffee-amber transition-colors text-coffee-dark">{t('navTech')}</Link>
+            <a href="#subscriptions" className="hover:text-coffee-amber transition-colors text-coffee-dark">{t('navSubs')}</a>
           </nav>
 
           {/* User Actions */}
           <div className="flex items-center gap-4">
+            {/* Language Switcher */}
+            <button
+              onClick={toggleLanguage}
+              className="flex items-center gap-1 px-2.5 py-1 text-xs font-bold border border-coffee-latte hover:border-coffee-amber text-coffee-dark rounded-full transition-colors hover:text-coffee-amber bg-white/50 shadow-sm"
+              title={lang === 'vi' ? 'Switch to English' : 'Chuyển sang tiếng Việt'}
+            >
+              <span>🌐</span>
+              <span>{lang === 'vi' ? 'VI' : 'EN'}</span>
+            </button>
+
             {user?.role === 'admin' && (
               <Link
                 to="/admin"
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-100/80 text-amber-900 hover:bg-amber-200 border border-amber-300 text-xs font-bold transition-all shadow-sm"
               >
                 <ShieldCheck className="size-4 text-coffee-amber" />
-                <span>Admin Portal</span>
+                <span>{t('admin')}</span>
               </Link>
             )}
 
@@ -89,7 +105,7 @@ export const AppLayout = () => {
                 <AvatarFallback className="text-xs bg-coffee-latte text-coffee-dark">{initials}</AvatarFallback>
               </Avatar>
               <span className="text-xs font-semibold hidden sm:inline-block text-coffee-dark">
-                Hi, {displayName}
+                {t('hello')}, {displayName}
               </span>
             </Link>
             <Button 
@@ -99,7 +115,7 @@ export const AppLayout = () => {
               className="gap-1.5 text-stone-500 hover:text-coffee-amber hover:bg-coffee-latte/40 px-3 py-1.5 rounded-full text-xs"
             >
               <LogOut className="size-4" />
-              <span className="hidden sm:inline">Logout</span>
+              <span className="hidden sm:inline">{t('logout')}</span>
             </Button>
           </div>
         </div>
