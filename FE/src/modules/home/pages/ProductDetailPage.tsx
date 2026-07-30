@@ -13,7 +13,6 @@ export const ProductDetailPage: React.FC = () => {
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
-  const [favorites, setFavorites] = useState<string[]>([]);
 
   useEffect(() => {
     if (!id) return;
