@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -21,26 +21,63 @@ type FormValues = z.infer<typeof registerSchema>;
 export const RegisterPage = () => {
   const [step, setStep] = useState<'register' | 'verify'>('register');
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [otp, setOtp] = useState('');
   const [loading, setLoading] = useState(false);
+  const [countdown, setCountdown] = useState(0);
+  const [testOtp, setTestOtp] = useState('');
+
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
     resolver: zodResolver(registerSchema),
   });
   const navigate = useNavigate();
 
+  // Đếm ngược thời gian gửi lại mã OTP
+  useEffect(() => {
+    if (countdown === 0) return;
+    const timer = setTimeout(() => {
+      setCountdown(countdown - 1);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [countdown]);
+
   const onRegisterSubmit = handleSubmit(async (values) => {
     setLoading(true);
     try {
-      await authApi.register({ email: values.email, password: values.password });
+      const res = await authApi.register({ email: values.email, password: values.password });
       setEmail(values.email);
+      setPassword(values.password);
       setStep('verify');
-      toast.success('OTP sent to your email.');
+      toast.success('Mã OTP đã được gửi.');
+      
+      // Nếu có mã OTP trả về (Chế độ test)
+      if (res.data && (res.data as any).otp) {
+        setTestOtp((res.data as any).otp);
+      }
     } catch (error: any) {
-      toast.error(error?.response?.data?.message ?? 'Something went wrong');
+      toast.error(error?.response?.data?.message ?? 'Đăng ký thất bại');
     } finally {
       setLoading(false);
     }
   });
+
+  const handleResendOtp = async () => {
+    if (countdown > 0 || !email || !password) return;
+    setLoading(true);
+    try {
+      const res = await authApi.register({ email, password });
+      toast.success('Đã gửi lại mã OTP mới.');
+      setCountdown(60); // Giới hạn 60 giây tiếp theo mới được gửi lại
+      
+      if (res.data && (res.data as any).otp) {
+        setTestOtp((res.data as any).otp);
+      }
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message ?? 'Không thể gửi lại mã OTP');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const onVerifySubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -66,6 +103,12 @@ export const RegisterPage = () => {
           <p className="text-xs text-stone-500">
             Enter the 6-digit code sent to <span className="font-semibold text-coffee-amber">{email}</span>
           </p>
+          
+          {testOtp && (
+            <div className="mt-2 p-3 bg-amber-50 border border-amber-200 text-amber-800 text-xs rounded-xl font-medium">
+              🔑 Mã OTP thử nghiệm: <span className="font-extrabold text-sm text-coffee-amber tracking-wider">{testOtp}</span>
+            </div>
+          )}
         </div>
         <div>
           <form className="space-y-5" onSubmit={onVerifySubmit}>
@@ -80,13 +123,25 @@ export const RegisterPage = () => {
               {loading && <Loader2 className="size-4 animate-spin mr-1.5" />}
               Verify OTP
             </Button>
-            <button
-              type="button"
-              onClick={() => { setStep('register'); setOtp(''); }}
-              className="block w-full text-center text-xs font-semibold text-stone-500 hover:text-coffee-amber transition-colors"
-            >
-              Back to register
-            </button>
+            
+            <div className="flex flex-col gap-2 pt-2 text-center">
+              <button
+                type="button"
+                onClick={handleResendOtp}
+                disabled={countdown > 0 || loading}
+                className="text-xs font-bold text-coffee-amber hover:text-coffee-dark disabled:text-stone-400 transition-colors"
+              >
+                {countdown > 0 ? `Gửi lại mã sau (${countdown}s)` : 'Gửi lại mã OTP'}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => { setStep('register'); setOtp(''); setTestOtp(''); }}
+                className="text-xs font-semibold text-stone-500 hover:text-coffee-amber transition-colors"
+              >
+                Back to register
+              </button>
+            </div>
           </form>
         </div>
       </div>
