@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import mongoose from 'mongoose';
 import { ProductModel } from '../models/product.model';
 
 // 1. ADMIN: Tạo sản phẩm mới (Hạt cà phê hoặc dụng cụ mới)
@@ -57,6 +58,12 @@ export const getProducts = async (req: Request, res: Response) => {
 export const getProductById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
+
+    // Kiểm tra xem ID có đúng định dạng MongoDB ObjectId không
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({ message: 'Không tìm thấy sản phẩm (ID không hợp lệ)' });
+    }
+
     const product = await ProductModel.findById(id);
     if (!product) {
       return res.status(404).json({ message: 'Không tìm thấy sản phẩm này' });
