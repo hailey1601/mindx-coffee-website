@@ -10,6 +10,9 @@ import { orderRouter } from './routes/order.routes';
 
 export const app = express();
 
+// Tin tưởng proxy của Vercel để lấy IP thật của client phục vụ rate-limit
+app.set('trust proxy', 1);
+
 app.use(cors({ origin: env.clientUrl }));
 app.use(express.json());
 app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 300 }));
