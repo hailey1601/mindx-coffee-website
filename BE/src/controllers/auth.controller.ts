@@ -8,7 +8,14 @@ export const register = async (req: Request, res: Response) => {
   const { email, password } = req.body as { email: string; password: string };
   const user = await createUserWithOtp(email, password);
   if (!user) return res.status(409).json({ message: 'Email already exists' });
-  return res.status(201).json({ message: 'OTP has been sent to your email' });
+  
+  const responseData: any = { message: 'OTP has been sent to your email' };
+  // Trả về OTP trực tiếp trong response để test nếu chưa cấu hình Gmail thật
+  if (!env.smtpUser || env.smtpUser.includes('example.com') || env.smtpUser === '') {
+    responseData.otp = user.otpCode;
+    responseData.note = "Test Mode: OTP được trả về trực tiếp vì chưa cấu hình SMTP.";
+  }
+  return res.status(201).json(responseData);
 };
 
 export const verifyRegisterOtp = async (req: Request, res: Response) => {
@@ -37,8 +44,15 @@ export const login = async (req: Request, res: Response) => {
     return res.status(403).json({ message: 'Please verify your email first using register OTP' });
   }
 
-  await issueOtpForUser(String(user._id));
-  return res.status(202).json({ message: 'OTP has been sent to your email', requiresOtp: true, email: user.email });
+  const updatedUser = await issueOtpForUser(String(user._id));
+  const responseData: any = { message: 'OTP has been sent to your email', requiresOtp: true, email: user.email };
+  
+  // Trả về OTP trực tiếp trong response để test nếu chưa cấu hình Gmail thật
+  if (updatedUser && (!env.smtpUser || env.smtpUser.includes('example.com') || env.smtpUser === '')) {
+    responseData.otp = updatedUser.otpCode;
+    responseData.note = "Test Mode: OTP được trả về trực tiếp vì chưa cấu hình SMTP.";
+  }
+  return res.status(202).json(responseData);
 };
 
 export const verifyLoginOtp = async (req: Request, res: Response) => {
@@ -58,8 +72,15 @@ export const verifyLoginOtp = async (req: Request, res: Response) => {
 
 export const forgotPassword = async (req: Request, res: Response) => {
   const { email } = req.body as { email: string };
-  await issueResetToken(email);
-  return res.json({ message: 'Reset password token sent to your email' });
+  const updatedUser = await issueResetToken(email);
+  
+  const responseData: any = { message: 'Reset password token sent to your email' };
+  // Trả về Token trực tiếp trong response để test nếu chưa cấu hình Gmail thật
+  if (updatedUser && (!env.smtpUser || env.smtpUser.includes('example.com') || env.smtpUser === '')) {
+    responseData.token = updatedUser.resetToken;
+    responseData.note = "Test Mode: Token được trả về trực tiếp vì chưa cấu hình SMTP.";
+  }
+  return res.json(responseData);
 };
 
 export const resetPassword = async (req: Request, res: Response) => {
