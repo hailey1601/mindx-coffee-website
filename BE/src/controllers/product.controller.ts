@@ -53,6 +53,20 @@ export const getProducts = async (req: Request, res: Response) => {
   }
 };
 
+// 2.5 KHÁCH HÀNG & ADMIN: Xem chi tiết một sản phẩm
+export const getProductById = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const product = await ProductModel.findById(id);
+    if (!product) {
+      return res.status(404).json({ message: 'Không tìm thấy sản phẩm này' });
+    }
+    return res.json(product);
+  } catch (error: any) {
+    return res.status(500).json({ message: 'Lỗi khi lấy thông tin sản phẩm', error: error.message });
+  }
+};
+
 // 3. ADMIN: Cập nhật thông tin sản phẩm (Sửa giá, sửa kho)
 export const updateProduct = async (req: Request, res: Response) => {
   try {

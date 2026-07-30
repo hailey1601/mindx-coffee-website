@@ -3,6 +3,7 @@ import {
   createProduct,
   deleteProduct,
   getProducts,
+  getProductById,
   updateProduct
 } from '../controllers/product.controller';
 import { adminGuard, authGuard } from '../middlewares/auth.middleware';
@@ -11,6 +12,9 @@ export const productRouter = Router();
 
 // KHÁCH HÀNG & ADMIN: Xem danh sách sản phẩm
 productRouter.get('/', getProducts);
+
+// KHÁCH HÀNG & ADMIN: Xem chi tiết một sản phẩm
+productRouter.get('/:id', getProductById);
 
 // ADMIN (yêu cầu đăng nhập + vai trò Admin): Tạo sản phẩm mới
 productRouter.post('/', authGuard, adminGuard, createProduct);

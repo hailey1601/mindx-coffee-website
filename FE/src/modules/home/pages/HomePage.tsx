@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import { 
   Coffee, 
   ChevronRight, 
@@ -344,11 +344,13 @@ export const HomePage = () => {
                     >
                       <Heart className={`size-4 ${favorites.includes(product._id) ? 'fill-red-500 text-red-500' : ''}`} />
                     </button>
-                    <img 
-                      src={product.imageUrl} 
-                      alt={product.name} 
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
+                    <Link to={`/product/${product._id}`}>
+                      <img 
+                        src={product.imageUrl} 
+                        alt={product.name} 
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 cursor-pointer"
+                      />
+                    </Link>
                   </div>
 
                   {/* Product Info */}
@@ -357,9 +359,11 @@ export const HomePage = () => {
                       <span className="text-[10px] text-coffee-amber font-semibold uppercase tracking-wider">
                         {categoryMap[product.category] || product.category}
                       </span>
-                      <h3 className="font-bold text-sm text-coffee-dark line-clamp-2 mt-0.5 hover:text-coffee-amber transition-colors cursor-pointer">
-                        {product.name}
-                      </h3>
+                      <Link to={`/product/${product._id}`}>
+                        <h3 className="font-bold text-sm text-coffee-dark line-clamp-2 mt-0.5 hover:text-coffee-amber transition-colors cursor-pointer">
+                          {product.name}
+                        </h3>
+                      </Link>
                       {/* Rating */}
                       <div className="flex items-center gap-1 mt-1">
                         <Star className="size-3 fill-coffee-amber text-coffee-amber" />

@@ -43,6 +43,9 @@ export const productApi = {
   getProducts: (params?: ProductQueryParams) =>
     http.get<Product[]>('/products', { params }),
 
+  getProductById: (id: string) =>
+    http.get<Product>(`/products/${id}`),
+
   createProduct: (payload: CreateProductPayload) =>
     http.post<{ message: string; product: Product }>('/products', payload),
 

@@ -7,6 +7,7 @@ import { RegisterPage } from '@/modules/auth/pages/RegisterPage';
 import { ForgotPasswordPage } from '@/modules/auth/pages/ForgotPasswordPage';
 import { LogoutPage } from '@/modules/auth/pages/LogoutPage';
 import { HomePage } from '@/modules/home/pages/HomePage';
+import { ProductDetailPage } from '@/modules/home/pages/ProductDetailPage';
 import { ProfilePage } from '@/modules/profile/pages/ProfilePage';
 import { CartPage } from '@/modules/cart/pages/CartPage';
 
@@ -27,6 +28,7 @@ function App() {
       {/* Protected user routes */}
       <Route element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
         <Route path="/" element={<HomePage />} />
+        <Route path="/product/:id" element={<ProductDetailPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/me" element={<Navigate to="/profile" replace />} />
