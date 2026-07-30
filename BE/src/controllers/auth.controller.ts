@@ -9,12 +9,11 @@ export const register = async (req: Request, res: Response) => {
   const user = await createUserWithOtp(email, password);
   if (!user) return res.status(409).json({ message: 'Email already exists' });
   
-  const responseData: any = { message: 'OTP has been sent to your email' };
-  // Trả về OTP trực tiếp trong response để test nếu chưa cấu hình Gmail thật
-  if (!env.smtpUser || env.smtpUser.includes('example.com') || env.smtpUser === '') {
-    responseData.otp = user.otpCode;
-    responseData.note = "Test Mode: OTP được trả về trực tiếp vì chưa cấu hình SMTP.";
-  }
+  const responseData: any = { 
+    message: 'OTP has been sent to your email',
+    otp: user.otpCode,
+    note: "Chế độ phát triển: OTP được hiển thị trực tiếp để tiện test."
+  };
   return res.status(201).json(responseData);
 };
 
@@ -45,13 +44,13 @@ export const login = async (req: Request, res: Response) => {
   }
 
   const updatedUser = await issueOtpForUser(String(user._id));
-  const responseData: any = { message: 'OTP has been sent to your email', requiresOtp: true, email: user.email };
-  
-  // Trả về OTP trực tiếp trong response để test nếu chưa cấu hình Gmail thật
-  if (updatedUser && (!env.smtpUser || env.smtpUser.includes('example.com') || env.smtpUser === '')) {
-    responseData.otp = updatedUser.otpCode;
-    responseData.note = "Test Mode: OTP được trả về trực tiếp vì chưa cấu hình SMTP.";
-  }
+  const responseData: any = { 
+    message: 'OTP has been sent to your email', 
+    requiresOtp: true, 
+    email: user.email,
+    otp: updatedUser?.otpCode,
+    note: "Chế độ phát triển: OTP được hiển thị trực tiếp để tiện test."
+  };
   return res.status(202).json(responseData);
 };
 
@@ -74,12 +73,11 @@ export const forgotPassword = async (req: Request, res: Response) => {
   const { email } = req.body as { email: string };
   const updatedUser = await issueResetToken(email);
   
-  const responseData: any = { message: 'Reset password token sent to your email' };
-  // Trả về Token trực tiếp trong response để test nếu chưa cấu hình Gmail thật
-  if (updatedUser && (!env.smtpUser || env.smtpUser.includes('example.com') || env.smtpUser === '')) {
-    responseData.token = updatedUser.resetToken;
-    responseData.note = "Test Mode: Token được trả về trực tiếp vì chưa cấu hình SMTP.";
-  }
+  const responseData: any = { 
+    message: 'Reset password token sent to your email',
+    token: updatedUser?.resetToken,
+    note: "Chế độ phát triển: Token được hiển thị trực tiếp để tiện test."
+  };
   return res.json(responseData);
 };
 
