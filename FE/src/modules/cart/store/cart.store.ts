@@ -7,19 +7,30 @@ export interface CartItem {
   category: string;
 }
 
-const CART_KEY = 'coffee_cart';
+const getCartKey = () => {
+  try {
+    const token = localStorage.getItem('access_token');
+    if (!token) return 'coffee_cart_guest';
+    const payloadBase64 = token.split('.')[1];
+    const payloadJson = atob(payloadBase64);
+    const payload = JSON.parse(payloadJson);
+    return `coffee_cart_${payload.sub || 'guest'}`;
+  } catch {
+    return 'coffee_cart_guest';
+  }
+};
 
 export const cartStore = {
   get: (): CartItem[] => {
     try {
-      const data = localStorage.getItem(CART_KEY);
+      const data = localStorage.getItem(getCartKey());
       return data ? JSON.parse(data) : [];
     } catch {
       return [];
     }
   },
   set: (items: CartItem[]) => {
-    localStorage.setItem(CART_KEY, JSON.stringify(items));
+    localStorage.setItem(getCartKey(), JSON.stringify(items));
   },
   add: (product: { _id: string; name: string; price: number; imageUrl: string; category: string }) => {
     const items = cartStore.get();
@@ -58,7 +69,7 @@ export const cartStore = {
     window.dispatchEvent(new Event('cart-change'));
   },
   clear: () => {
-    localStorage.removeItem(CART_KEY);
+    localStorage.removeItem(getCartKey());
     window.dispatchEvent(new Event('cart-change'));
   }
 };
