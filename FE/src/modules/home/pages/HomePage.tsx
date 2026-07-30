@@ -108,9 +108,9 @@ export const HomePage = () => {
     setTimeout(() => {
       const element = document.getElementById('products');
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
-    }, 100);
+    }, 200);
   };
 
   const handleAddToCart = (product: ApiProduct) => {
@@ -442,10 +442,10 @@ export const HomePage = () => {
           <div>
             <h4 className="font-bold text-sm mb-4">Shop Collections</h4>
             <ul className="space-y-2.5 text-xs text-stone-500">
-              <li><a href="#beans" className="hover:text-coffee-amber transition-colors">Single Origin Beans</a></li>
-              <li><a href="#beans" className="hover:text-coffee-amber transition-colors">Signature Espresso Blends</a></li>
-              <li><a href="#tools" className="hover:text-coffee-amber transition-colors">Hand-Drip Kits</a></li>
-              <li><a href="#tech" className="hover:text-coffee-amber transition-colors">Smart Coffee Scales & Tech</a></li>
+              <li><button onClick={() => handleCategorySelect('Beans')} className="hover:text-coffee-amber transition-colors text-left">Single Origin Beans</button></li>
+              <li><button onClick={() => handleCategorySelect('Beans')} className="hover:text-coffee-amber transition-colors text-left">Signature Espresso Blends</button></li>
+              <li><button onClick={() => handleCategorySelect('Tools')} className="hover:text-coffee-amber transition-colors text-left">Hand-Drip Kits</button></li>
+              <li><button onClick={() => handleCategorySelect('Tech')} className="hover:text-coffee-amber transition-colors text-left">Smart Coffee Scales & Tech</button></li>
             </ul>
           </div>
 
