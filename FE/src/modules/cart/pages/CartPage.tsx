@@ -13,6 +13,7 @@ import {
   ChevronLeft
 } from 'lucide-react';
 import { cartStore, type CartItem } from '@/modules/cart/store/cart.store';
+import { formatPrice } from '@/shared/lib/utils';
 import { orderApi } from '@/api/order.api';
 import { toast } from 'sonner';
 
@@ -53,7 +54,7 @@ export const CartPage = () => {
   };
 
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const shipping = subtotal > 150 || subtotal === 0 ? 0 : 30; // Free shipping for orders over $150
+  const shipping = subtotal > 1500000 || subtotal === 0 ? 0 : 30000; // Free shipping for orders over 1.500.000 đ
   const total = subtotal + shipping;
 
   const handleCheckout = async (e: React.FormEvent) => {
@@ -157,7 +158,7 @@ export const CartPage = () => {
           <div className="flex justify-between pt-1">
             <span className="text-stone-500 font-semibold">Total Paid:</span>
             <span className="font-extrabold text-sm text-coffee-amber">
-              ${(createdOrder.totalAmount || total).toFixed(2)}
+              {formatPrice(createdOrder.totalAmount || total)}
             </span>
           </div>
         </div>
@@ -229,7 +230,7 @@ export const CartPage = () => {
                           {item.category === 'Beans' ? 'Coffee Beans' : item.category === 'Tools' ? 'Brewing Tools' : 'Brewing Tech'}
                         </span>
                         <h4 className="font-bold text-sm text-coffee-dark truncate">{item.name}</h4>
-                        <p className="text-xs font-semibold text-stone-500">${item.price.toFixed(2)}</p>
+                        <p className="text-xs font-semibold text-stone-500">{formatPrice(item.price)}</p>
                       </div>
                     </div>
 
@@ -251,8 +252,8 @@ export const CartPage = () => {
                         </button>
                       </div>
                       
-                      <div className="text-right w-16">
-                        <span className="font-bold text-sm text-coffee-dark">${(item.price * item.quantity).toFixed(2)}</span>
+                      <div className="text-right w-24">
+                        <span className="font-bold text-sm text-coffee-dark">{formatPrice(item.price * item.quantity)}</span>
                       </div>
 
                       <button 
@@ -280,23 +281,23 @@ export const CartPage = () => {
             <div className="space-y-3.5 text-xs text-stone-600">
               <div className="flex justify-between">
                 <span>Subtotal</span>
-                <span className="font-bold text-coffee-dark">${subtotal.toFixed(2)}</span>
+                <span className="font-bold text-coffee-dark">{formatPrice(subtotal)}</span>
               </div>
               <div className="flex justify-between">
                 <span>Shipping Fee</span>
                 <span className="font-bold text-coffee-dark">
-                  {shipping === 0 ? 'Free' : `$${shipping.toFixed(2)}`}
+                  {shipping === 0 ? 'Miễn phí' : formatPrice(shipping)}
                 </span>
               </div>
               {shipping > 0 && (
                 <p className="text-[10px] text-stone-400 text-right italic">
-                  * Free shipping for orders over $150
+                  * Miễn phí giao hàng cho đơn hàng từ {formatPrice(1500000)}
                 </p>
               )}
               <div className="border-t border-coffee-latte/50 pt-4 flex justify-between items-center text-sm">
                 <span className="font-bold text-coffee-dark">Grand Total</span>
                 <span className="font-extrabold text-coffee-amber text-lg">
-                  ${total.toFixed(2)}
+                  {formatPrice(total)}
                 </span>
               </div>
             </div>

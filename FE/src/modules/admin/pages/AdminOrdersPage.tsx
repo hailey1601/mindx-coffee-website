@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ShoppingBag, Search, Eye, Clock, CheckCircle2, Truck, XCircle } from 'lucide-react';
 import { orderApi, type Order } from '@/api/order.api';
 import { Input } from '@/shared/components/ui/input';
+import { formatPrice } from '@/shared/lib/utils';
 
 export const AdminOrdersPage: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -183,7 +184,7 @@ export const AdminOrdersPage: React.FC = () => {
                         <p className="font-semibold text-stone-800">{order.shippingAddress?.fullName}</p>
                         <p className="text-xs text-stone-400">{customerEmail} • {order.shippingAddress?.phone}</p>
                       </td>
-                      <td className="px-6 py-4 font-bold text-stone-900">${order.totalAmount.toFixed(2)}</td>
+                      <td className="px-6 py-4 font-bold text-stone-900">{formatPrice(order.totalAmount)}</td>
                       <td className="px-6 py-4">
                         <div className="space-y-1">
                           {getPaymentBadge(order.paymentStatus)}
@@ -281,10 +282,10 @@ export const AdminOrdersPage: React.FC = () => {
                     <div key={idx} className="flex items-center justify-between p-3">
                       <div>
                         <p className="font-bold text-stone-800 text-sm">{item.name}</p>
-                        <p className="text-xs text-stone-400">Đơn giá: ${item.price.toFixed(2)} x {item.quantity}</p>
+                        <p className="text-xs text-stone-400">Đơn giá: {formatPrice(item.price)} x {item.quantity}</p>
                       </div>
                       <p className="font-bold text-stone-900 text-sm">
-                        ${(item.price * item.quantity).toFixed(2)}
+                        {formatPrice(item.price * item.quantity)}
                       </p>
                     </div>
                   ))}
@@ -294,7 +295,7 @@ export const AdminOrdersPage: React.FC = () => {
               {/* Summary total */}
               <div className="flex justify-between items-center pt-4 border-t border-stone-100">
                 <span className="font-bold text-stone-700">Tổng tiền đơn hàng:</span>
-                <span className="text-xl font-bold text-coffee-amber">${selectedOrder.totalAmount.toFixed(2)}</span>
+                <span className="text-xl font-bold text-coffee-amber">{formatPrice(selectedOrder.totalAmount)}</span>
               </div>
             </div>
           </div>

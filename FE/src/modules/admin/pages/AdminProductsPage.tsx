@@ -3,6 +3,7 @@ import { Plus, Search, Edit2, Trash2, CheckCircle, XCircle, Package, AlertCircle
 import { productApi, type Product, type CreateProductPayload } from '@/api/product.api';
 import { Button } from '@/shared/components/ui/button';
 import { Input } from '@/shared/components/ui/input';
+import { formatPrice } from '@/shared/lib/utils';
 
 export const AdminProductsPage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -202,7 +203,7 @@ export const AdminProductsPage: React.FC = () => {
                         {p.category}
                       </span>
                     </td>
-                    <td className="px-6 py-4 font-bold text-stone-900">${p.price.toFixed(2)}</td>
+                    <td className="px-6 py-4 font-bold text-stone-900">{formatPrice(p.price)}</td>
                     <td className="px-6 py-4">
                       <span className={`font-semibold ${p.stock < 10 ? 'text-red-500' : 'text-emerald-600'}`}>
                         {p.stock} sản phẩm

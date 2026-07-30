@@ -9,7 +9,7 @@ const seedProducts = [
   {
     name: 'Ethiopia Yirgacheffe Kochere',
     category: 'Beans' as const,
-    price: 18.5,
+    price: 380000,
     stock: 45,
     description: 'Nốt hương hoa nhài tinh tế, vị chua thanh thoát của cam quýt và hậu vị ngọt dịu của mật ong ngọt ngào. Phù hợp nhất cho phương pháp pha Pour Over (V60).',
     imageUrl: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?q=80&w=800&auto=format&fit=crop',
@@ -18,7 +18,7 @@ const seedProducts = [
   {
     name: 'Colombia Supremo Huila',
     category: 'Beans' as const,
-    price: 16.0,
+    price: 320000,
     stock: 60,
     description: 'Vị đậm đà vừa phải, nốt hương ngọt của caramel cháy, chocolate đen cùng một chút hậu vị quả mọng chín. Lý tưởng cho cả Espresso và pha phin.',
     imageUrl: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?q=80&w=800&auto=format&fit=crop',
@@ -27,19 +27,19 @@ const seedProducts = [
   {
     name: 'Vietnam Fine Robusta Lâm Đồng',
     category: 'Beans' as const,
-    price: 12.5,
+    price: 250000,
     stock: 80,
     description: 'Đặc trưng hạt Robusta chế biến ướt chất lượng cao (Fine Robusta). Hương vị đậm đặc của chocolate hạt dẻ, ít chát, thể chất dày và hậu vị ngọt sâu kéo dài.',
-    imageUrl: 'https://images.unsplash.com/photo-1587918842454-870b26835a82?q=80&w=800&auto=format&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=800',
     status: 'active' as const
   },
   {
     name: 'Guatemala Antigua Pastoral',
     category: 'Beans' as const,
-    price: 19.0,
+    price: 390000,
     stock: 30,
     description: 'Hạt Arabica trồng trên vùng đất núi lửa đặc thù. Mang hương vị phức hợp của khói nhẹ, gia vị, chocolate đen và độ chua tinh tế từ táo xanh.',
-    imageUrl: 'https://images.unsplash.com/photo-1610632380989-680aa40816c6?q=80&w=800&auto=format&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1506370408744-84d7293b61bf?q=80&w=800',
     status: 'active' as const
   },
 
@@ -47,7 +47,7 @@ const seedProducts = [
   {
     name: 'Hario V60 Ceramic Dripper 02',
     category: 'Tools' as const,
-    price: 25.0,
+    price: 550000,
     stock: 25,
     description: 'Phễu lọc làm bằng gốm sứ cao cấp của Hario Nhật Bản. Thiết kế rãnh xoắn ốc độc đáo giúp dòng chảy tối ưu cho ly cà phê Pour Over tròn vị.',
     imageUrl: 'https://images.unsplash.com/photo-1577968897966-3d4325b36b61?q=80&w=800&auto=format&fit=crop',
@@ -56,7 +56,7 @@ const seedProducts = [
   {
     name: 'Classic French Press Coffee Maker 800ml',
     category: 'Tools' as const,
-    price: 32.0,
+    price: 680000,
     stock: 15,
     description: 'Bình pha kiểu Pháp với kính borosilicate chịu nhiệt chịu lực tốt, khung thép không gỉ. Đem lại ly cà phê body dày dặn và hương vị trọn vẹn của tinh dầu.',
     imageUrl: 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?q=80&w=800&auto=format&fit=crop',
@@ -65,7 +65,7 @@ const seedProducts = [
   {
     name: 'AeroPress Original Coffee Maker',
     category: 'Tools' as const,
-    price: 39.9,
+    price: 850000,
     stock: 40,
     description: 'Dụng cụ pha cà phê đa năng bằng áp suất pittông của AeroPress. Pha chế cực kỳ nhanh gọn, dễ vệ sinh, mang đi du lịch tiện lợi, tạo ra ly cà phê ít chua và mịn màng.',
     imageUrl: 'https://images.unsplash.com/photo-1518057111178-44a106bad636?q=80&w=800&auto=format&fit=crop',
@@ -74,7 +74,7 @@ const seedProducts = [
   {
     name: 'Hario Buono Pouring Kettle 1.2L',
     category: 'Tools' as const,
-    price: 45.0,
+    price: 950000,
     stock: 20,
     description: 'Ấm rót cổ ngỗng Hario Buono bằng inox cao cấp. Vòi rót uốn cong đặc trưng giúp kiểm soát tốc độ và vị trí dòng nước chảy cực kì chính xác.',
     imageUrl: 'https://images.unsplash.com/photo-1595434061149-868752a2130a?q=80&w=800&auto=format&fit=crop',
@@ -85,7 +85,7 @@ const seedProducts = [
   {
     name: 'Baratza Encore Conical Burr Grinder',
     category: 'Tech' as const,
-    price: 149.0,
+    price: 3450000,
     stock: 10,
     description: 'Máy xay cà phê điện gia đình huyền thoại của Baratza Mỹ. Thiết kế 40 cấp độ xay tinh chỉnh từ thô (French Press) đến mịn (Espresso). Lưỡi dao hình nón bền bỉ.',
     imageUrl: 'https://images.unsplash.com/photo-1524350876685-274059332603?q=80&w=800&auto=format&fit=crop',
@@ -94,7 +94,7 @@ const seedProducts = [
   {
     name: 'Timemore Black Mirror Basic 2 Smart Scale',
     category: 'Tech' as const,
-    price: 55.0,
+    price: 1150000,
     stock: 18,
     description: 'Cân điện tử chuyên dụng cho pha chế cà phê, cảm biến siêu nhạy, độ chính xác 0.1g. Tích hợp màn hình LED ẩn sắc nét và chức năng tự động đếm thời gian pha.',
     imageUrl: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=800&auto=format&fit=crop',
@@ -103,7 +103,7 @@ const seedProducts = [
   {
     name: 'Fellow Stagg EKG Electric Kettle 0.9L',
     category: 'Tech' as const,
-    price: 165.0,
+    price: 3850000,
     stock: 8,
     description: 'Ấm đun nước điện thông minh điều chỉnh nhiệt độ chính xác từng độ C. Vòi rót Fluted kiểm soát dòng chảy đỉnh cao, giữ nhiệt lên đến 60 phút.',
     imageUrl: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?q=80&w=800&auto=format&fit=crop',

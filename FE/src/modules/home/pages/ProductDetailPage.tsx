@@ -4,6 +4,7 @@ import { ArrowLeft, ShoppingBag, Star, Plus, Minus, CheckCircle, AlertTriangle, 
 import { productApi, type Product } from '@/api/product.api';
 import { cartStore } from '@/modules/cart/store/cart.store';
 import { toast } from 'sonner';
+import { formatPrice } from '@/shared/lib/utils';
 
 export const ProductDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -177,7 +178,7 @@ export const ProductDetailPage: React.FC = () => {
           <div className="bg-coffee-latte/20 border border-coffee-latte/50 rounded-2xl p-4 flex items-center justify-between">
             <div>
               <span className="text-xs text-stone-500 uppercase tracking-widest font-semibold">Giá bán lẻ</span>
-              <p className="text-3xl font-extrabold text-coffee-dark font-mono">${product.price.toFixed(2)}</p>
+              <p className="text-3xl font-extrabold text-coffee-dark font-mono">{formatPrice(product.price)}</p>
             </div>
             <div className="text-right">
               <span className="text-xs text-stone-500 uppercase tracking-widest font-semibold">Phí giao hàng</span>
@@ -219,7 +220,7 @@ export const ProductDetailPage: React.FC = () => {
                   className="flex-grow bg-coffee-dark hover:bg-coffee-amber text-white font-bold rounded-full h-12 shadow-md hover:shadow-lg transition-all duration-300 gap-2 text-sm flex items-center justify-center"
                 >
                   <ShoppingBag className="size-5" />
-                  Thêm vào giỏ hàng (${(product.price * quantity).toFixed(2)})
+                  Thêm vào giỏ hàng ({formatPrice(product.price * quantity)})
                 </button>
               </div>
             </div>
@@ -266,7 +267,7 @@ export const ProductDetailPage: React.FC = () => {
                     {p.name}
                   </h4>
                   <div className="flex items-center justify-between pt-2 border-t border-coffee-latte mt-2">
-                    <span className="font-bold text-xs text-coffee-dark font-mono">${p.price.toFixed(2)}</span>
+                    <span className="font-bold text-xs text-coffee-dark font-mono">{formatPrice(p.price)}</span>
                     <span className="text-[10px] text-coffee-amber font-semibold uppercase">{p.category}</span>
                   </div>
                 </div>

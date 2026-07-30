@@ -23,3 +23,7 @@ export function applyTheme(theme: Theme) {
     (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
   root.classList.toggle('dark', isDark);
 }
+
+export function formatPrice(price: number): string {
+  return price.toLocaleString('vi-VN') + ' đ';
+}

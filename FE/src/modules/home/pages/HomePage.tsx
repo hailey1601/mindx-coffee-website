@@ -12,6 +12,7 @@ import {
 import { productApi, type Product as ApiProduct } from '@/api/product.api';
 import { cartStore } from '@/modules/cart/store/cart.store';
 import { toast } from 'sonner';
+import { formatPrice } from '@/shared/lib/utils';
 
 const mockProductsMapped: ApiProduct[] = [
   {
@@ -372,7 +373,7 @@ export const HomePage = () => {
                     </div>
 
                     <div className="flex items-center justify-between pt-3 border-t border-coffee-latte mt-3">
-                      <span className="font-bold text-sm text-coffee-dark">${product.price.toFixed(2)}</span>
+                      <span className="font-bold text-sm text-coffee-dark">{formatPrice(product.price)}</span>
                       <button 
                         onClick={() => handleAddToCart(product)}
                         className="p-2 rounded-full bg-coffee-latte/50 hover:bg-coffee-amber hover:text-white text-coffee-dark transition-all duration-300 shadow-sm"
