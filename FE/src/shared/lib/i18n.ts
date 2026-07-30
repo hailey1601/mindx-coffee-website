@@ -106,7 +106,22 @@ const TRANSLATIONS = {
     loginDesc: 'Nhập tài khoản và mật khẩu để tiếp tục.',
     loginBtn: 'Đăng Nhập',
     forgotPassword: 'Quên mật khẩu?',
-    noAccount: 'Chưa có tài khoản? Đăng ký ngay'
+    noAccount: 'Chưa có tài khoản? Đăng ký ngay',
+
+    // Footer
+    footerDesc: 'Chúng tôi nhập khẩu hạt cà phê specialty chất lượng cao trực tiếp từ các nông hộ bền vững trên thế giới, rang thủ công tỉ mỉ tại xưởng địa phương.',
+    footerCollections: 'Bộ Sưu Tập',
+    footerSingleOrigin: 'Cà Phê Hạt Đơn Vùng',
+    footerEspressoBlends: 'Cà Phê Phối Trộn Espresso',
+    footerHandDrip: 'Bộ Dụng Cụ Pha Tay',
+    footerSmartTech: 'Cân Điện Tử & Công Nghệ',
+    footerResources: 'Kiến Thức Cà Phê',
+    footerV60Guide: 'Hướng Dẫn Pha V60',
+    footerEspressoTips: 'Bí Quyết Chiết Xuất Espresso',
+    footerWaterChem: 'Nguồn Nước Trong Pha Chế',
+    footerDirectTrade: 'Chương Trình Thương Mại Trực Tiếp',
+    footerStoreInfo: 'Thông Tin Cửa Hàng',
+    footerHours: 'T2 - CN: 7:00 - 17:00'
   },
   en: {
     // Nav & Common
@@ -211,7 +226,22 @@ const TRANSLATIONS = {
     loginDesc: 'Enter your account details to continue.',
     loginBtn: 'Login',
     forgotPassword: 'Forgot password?',
-    noAccount: 'Don\'t have an account? Register now'
+    noAccount: 'Don\'t have an account? Register now',
+
+    // Footer
+    footerDesc: 'We source specialty-grade, micro-lot coffee beans directly from ethical farmers globally, roasted with precision locally.',
+    footerCollections: 'Shop Collections',
+    footerSingleOrigin: 'Single Origin Beans',
+    footerEspressoBlends: 'Signature Espresso Blends',
+    footerHandDrip: 'Hand-Drip Kits',
+    footerSmartTech: 'Smart Coffee Scales & Tech',
+    footerResources: 'Coffee Resources',
+    footerV60Guide: 'V60 Pour Over Guide',
+    footerEspressoTips: 'Espresso Extraction Tips',
+    footerWaterChem: 'Water Chemistry for Brewing',
+    footerDirectTrade: 'Our Direct Trade Program',
+    footerStoreInfo: 'Store Information',
+    footerHours: 'Mon - Sun: 7:00 AM - 5:00 PM'
   }
 };
 

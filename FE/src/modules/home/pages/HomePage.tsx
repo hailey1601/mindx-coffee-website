@@ -100,6 +100,17 @@ export const HomePage = () => {
       });
   }, []);
 
+  // Tự động cuộn xuống phần sản phẩm khi click các link phân loại trên Header
+  useEffect(() => {
+    const category = searchParams.get('category');
+    if (category) {
+      const element = document.getElementById('products');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [searchParams]);
+
   const handleCategorySelect = (category: string) => {
     if (category === 'all') {
       searchParams.delete('category');
@@ -428,7 +439,7 @@ export const HomePage = () => {
               <span className="font-bold tracking-wider font-serif">DAILY GRIND</span>
             </div>
             <p className="text-xs text-stone-500 leading-relaxed">
-              We source specialty-grade, micro-lot coffee beans directly from ethical farmers globally, roasted with precision locally.
+              {t('footerDesc')}
             </p>
             <div className="flex items-center gap-3">
               <a href="#" className="text-stone-400 hover:text-coffee-amber transition-colors">
@@ -447,32 +458,32 @@ export const HomePage = () => {
           </div>
 
           <div>
-            <h4 className="font-bold text-sm mb-4">Shop Collections</h4>
+            <h4 className="font-bold text-sm mb-4">{t('footerCollections')}</h4>
             <ul className="space-y-2.5 text-xs text-stone-500">
-              <li><button onClick={() => handleCategorySelect('Beans')} className="hover:text-coffee-amber transition-colors text-left">Single Origin Beans</button></li>
-              <li><button onClick={() => handleCategorySelect('Beans')} className="hover:text-coffee-amber transition-colors text-left">Signature Espresso Blends</button></li>
-              <li><button onClick={() => handleCategorySelect('Tools')} className="hover:text-coffee-amber transition-colors text-left">Hand-Drip Kits</button></li>
-              <li><button onClick={() => handleCategorySelect('Tech')} className="hover:text-coffee-amber transition-colors text-left">Smart Coffee Scales & Tech</button></li>
+              <li><button onClick={() => handleCategorySelect('Beans')} className="hover:text-coffee-amber transition-colors text-left">{t('footerSingleOrigin')}</button></li>
+              <li><button onClick={() => handleCategorySelect('Beans')} className="hover:text-coffee-amber transition-colors text-left">{t('footerEspressoBlends')}</button></li>
+              <li><button onClick={() => handleCategorySelect('Tools')} className="hover:text-coffee-amber transition-colors text-left">{t('footerHandDrip')}</button></li>
+              <li><button onClick={() => handleCategorySelect('Tech')} className="hover:text-coffee-amber transition-colors text-left">{t('footerSmartTech')}</button></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-bold text-sm mb-4">Coffee Resources</h4>
+            <h4 className="font-bold text-sm mb-4">{t('footerResources')}</h4>
             <ul className="space-y-2.5 text-xs text-stone-500">
-              <li><a href="#" className="hover:text-coffee-amber transition-colors">V60 Pour Over Guide</a></li>
-              <li><a href="#" className="hover:text-coffee-amber transition-colors">Espresso Extraction Tips</a></li>
-              <li><a href="#" className="hover:text-coffee-amber transition-colors">Water Chemistry for Brewing</a></li>
-              <li><a href="#" className="hover:text-coffee-amber transition-colors">Our Direct Trade Program</a></li>
+              <li><a href="#" className="hover:text-coffee-amber transition-colors">{t('footerV60Guide')}</a></li>
+              <li><a href="#" className="hover:text-coffee-amber transition-colors">{t('footerEspressoTips')}</a></li>
+              <li><a href="#" className="hover:text-coffee-amber transition-colors">{t('footerWaterChem')}</a></li>
+              <li><a href="#" className="hover:text-coffee-amber transition-colors">{t('footerDirectTrade')}</a></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-bold text-sm mb-4">Store Information</h4>
+            <h4 className="font-bold text-sm mb-4">{t('footerStoreInfo')}</h4>
             <ul className="space-y-2.5 text-xs text-stone-500">
               <li>📍 53 Specialty Ave, Brewtown</li>
               <li>✉️ support@dailygrind.coffee</li>
               <li>📞 (555) 433-2739</li>
-              <li>🕒 Mon - Sun: 7:00 AM - 5:00 PM</li>
+              <li>🕒 {t('footerHours')}</li>
             </ul>
           </div>
         </div>
