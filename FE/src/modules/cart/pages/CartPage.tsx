@@ -16,8 +16,10 @@ import { cartStore, type CartItem } from '@/modules/cart/store/cart.store';
 import { formatPrice } from '@/shared/lib/utils';
 import { orderApi } from '@/api/order.api';
 import { toast } from 'sonner';
+import { useTranslation } from '@/shared/lib/i18n';
 
 export const CartPage = () => {
+  const { t, lang } = useTranslation();
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isOrdering, setIsOrdering] = useState(false);
@@ -124,39 +126,39 @@ export const CartPage = () => {
         </div>
         
         <div className="space-y-3">
-          <h1 className="text-3xl font-extrabold font-serif text-coffee-dark">Order Placed Successfully!</h1>
+          <h1 className="text-3xl font-extrabold font-serif text-coffee-dark">{t('orderSuccess')}</h1>
           <p className="text-stone-500 text-sm">
-            Thank you for choosing Daily Grind. Your order has been received and is being processed.
+            {t('orderSuccessDesc')}
           </p>
         </div>
 
         <div className="border border-dashed border-coffee-latte rounded-2xl p-6 bg-white/40 space-y-4 text-left text-xs">
           <div className="flex justify-between border-b border-coffee-latte/50 pb-2.5">
-            <span className="text-stone-500 font-medium">Order ID:</span>
+            <span className="text-stone-500 font-medium">{t('orderId')}:</span>
             <span className="font-bold text-coffee-dark font-mono">{createdOrder._id}</span>
           </div>
           <div className="flex justify-between border-b border-coffee-latte/50 pb-2.5">
-            <span className="text-stone-500 font-medium">Recipient Name:</span>
+            <span className="text-stone-500 font-medium">{t('recipientName')}:</span>
             <span className="font-bold text-coffee-dark">{createdOrder.shippingAddress.fullName}</span>
           </div>
           <div className="flex justify-between border-b border-coffee-latte/50 pb-2.5">
-            <span className="text-stone-500 font-medium">Phone Number:</span>
+            <span className="text-stone-500 font-medium">{t('phoneLabel')}:</span>
             <span className="font-bold text-coffee-dark">{createdOrder.shippingAddress.phone}</span>
           </div>
           <div className="flex justify-between border-b border-coffee-latte/50 pb-2.5">
-            <span className="text-stone-500 font-medium">Shipping Address:</span>
+            <span className="text-stone-500 font-medium">{t('addressLabel')}:</span>
             <span className="font-bold text-coffee-dark text-right max-w-xs truncate">
               {createdOrder.shippingAddress.address}, {createdOrder.shippingAddress.city}
             </span>
           </div>
           <div className="flex justify-between border-b border-coffee-latte/50 pb-2.5">
-            <span className="text-stone-500 font-medium">Payment Method:</span>
+            <span className="text-stone-500 font-medium">{t('paymentMethod')}:</span>
             <span className="font-bold text-coffee-dark">
-              {createdOrder.paymentMethod === 'Online' ? 'Online Card' : 'Cash on Delivery (COD)'}
+              {createdOrder.paymentMethod === 'Online' ? t('onlineCard') : t('codText')}
             </span>
           </div>
           <div className="flex justify-between pt-1">
-            <span className="text-stone-500 font-semibold">Total Paid:</span>
+            <span className="text-stone-500 font-semibold">{t('totalPaid')}:</span>
             <span className="font-extrabold text-sm text-coffee-amber">
               {formatPrice(createdOrder.totalAmount || total)}
             </span>
@@ -168,7 +170,7 @@ export const CartPage = () => {
             to="/" 
             className="inline-flex items-center justify-center bg-coffee-dark hover:bg-coffee-amber text-white font-bold px-6 py-3 rounded-full text-sm transition-all duration-300 gap-1.5"
           >
-            Back to Shop
+            {t('backToHome')}
           </Link>
         </div>
       </div>
@@ -185,7 +187,7 @@ export const CartPage = () => {
         >
           <ChevronLeft className="size-4" />
         </button>
-        <span className="text-xs font-bold uppercase tracking-wider text-stone-500">Continue shopping</span>
+        <span className="text-xs font-bold uppercase tracking-wider text-stone-500">{t('continueShopping')}</span>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
@@ -195,10 +197,10 @@ export const CartPage = () => {
             <div className="flex items-center justify-between border-b border-coffee-latte/50 pb-4">
               <h1 className="text-xl font-bold font-serif text-coffee-dark flex items-center gap-2">
                 <ShoppingBag className="size-5 text-coffee-amber" />
-                Your Shopping Cart
+                {t('shoppingCart')}
               </h1>
               <span className="text-xs bg-coffee-latte text-coffee-dark px-3 py-1 rounded-full font-semibold">
-                {cartItems.reduce((sum, item) => sum + item.quantity, 0)} items
+                {cartItems.reduce((sum, item) => sum + item.quantity, 0)} {t('itemsCount')}
               </span>
             </div>
 
@@ -206,14 +208,14 @@ export const CartPage = () => {
               <div className="text-center py-16 space-y-4">
                 <Coffee className="size-16 text-stone-300 mx-auto" />
                 <div className="space-y-1">
-                  <h3 className="font-bold text-coffee-dark text-sm">Your cart is empty</h3>
-                  <p className="text-xs text-stone-500">Add some specialty coffee or premium brewing gear from our shop.</p>
+                  <h3 className="font-bold text-coffee-dark text-sm">{t('emptyCart')}</h3>
+                  <p className="text-xs text-stone-500">{t('emptyCartDesc')}</p>
                 </div>
                 <Link 
                   to="/" 
                   className="inline-flex items-center bg-coffee-dark hover:bg-coffee-amber text-white px-5 py-2.5 rounded-full text-xs font-bold transition-all gap-1 shadow-sm"
                 >
-                  Shop Now <ArrowRight className="size-3.5" />
+                  {t('btnShopAll')} <ArrowRight className="size-3.5" />
                 </Link>
               </div>
             ) : (
@@ -275,27 +277,27 @@ export const CartPage = () => {
           {/* Summary Box */}
           <div className="bg-white/80 backdrop-blur-md p-6 rounded-3xl border border-coffee-latte/60 shadow-sm space-y-6">
             <h2 className="text-lg font-bold font-serif text-coffee-dark border-b border-coffee-latte/50 pb-4">
-              Order Summary
+              {t('orderSummary')}
             </h2>
 
             <div className="space-y-3.5 text-xs text-stone-600">
               <div className="flex justify-between">
-                <span>Subtotal</span>
+                <span>{t('subtotal')}</span>
                 <span className="font-bold text-coffee-dark">{formatPrice(subtotal)}</span>
               </div>
               <div className="flex justify-between">
-                <span>Shipping Fee</span>
+                <span>{t('shippingFee')}</span>
                 <span className="font-bold text-coffee-dark">
-                  {shipping === 0 ? 'Miễn phí' : formatPrice(shipping)}
+                  {shipping === 0 ? t('freeText') : formatPrice(shipping)}
                 </span>
               </div>
               {shipping > 0 && (
                 <p className="text-[10px] text-stone-400 text-right italic">
-                  * Miễn phí giao hàng cho đơn hàng từ {formatPrice(1500000)}
+                  * {t('freeShippingDesc')}
                 </p>
               )}
               <div className="border-t border-coffee-latte/50 pt-4 flex justify-between items-center text-sm">
-                <span className="font-bold text-coffee-dark">Grand Total</span>
+                <span className="font-bold text-coffee-dark">{t('grandTotal')}</span>
                 <span className="font-extrabold text-coffee-amber text-lg">
                   {formatPrice(total)}
                 </span>
@@ -308,29 +310,29 @@ export const CartPage = () => {
             <form onSubmit={handleCheckout} className="bg-white/80 backdrop-blur-md p-6 rounded-3xl border border-coffee-latte/60 shadow-sm space-y-5">
               <h2 className="text-base font-bold font-serif text-coffee-dark border-b border-coffee-latte/50 pb-3 flex items-center gap-1.5">
                 <MapPin className="size-4 text-coffee-amber" />
-                Shipping Details
+                {t('shippingDetails')}
               </h2>
 
               <div className="space-y-3.5">
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold text-stone-500 uppercase tracking-wider">Full Name</label>
+                  <label className="text-[10px] font-bold text-stone-500 uppercase tracking-wider">{t('fullNameLabel')}</label>
                   <input 
                     type="text" 
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
-                    placeholder="John Doe" 
+                    placeholder={t('fullNamePlaceholder')} 
                     className="w-full bg-white border border-coffee-latte/80 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-coffee-amber transition-colors"
                     required
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold text-stone-500 uppercase tracking-wider">Phone Number</label>
+                  <label className="text-[10px] font-bold text-stone-500 uppercase tracking-wider">{t('phoneLabel')}</label>
                   <input 
                     type="tel" 
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    placeholder="+1 (555) 123-4567" 
+                    placeholder={t('phonePlaceholder')} 
                     className="w-full bg-white border border-coffee-latte/80 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-coffee-amber transition-colors"
                     required
                   />
@@ -338,23 +340,23 @@ export const CartPage = () => {
 
                 <div className="grid grid-cols-2 gap-3">
                   <div className="space-y-1">
-                    <label className="text-[10px] font-bold text-stone-500 uppercase tracking-wider">Street Address</label>
+                    <label className="text-[10px] font-bold text-stone-500 uppercase tracking-wider">{t('addressLabel')}</label>
                     <input 
                       type="text" 
                       value={address}
                       onChange={(e) => setAddress(e.target.value)}
-                      placeholder="123 Coffee St" 
+                      placeholder={t('addressPlaceholder')} 
                       className="w-full bg-white border border-coffee-latte/80 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-coffee-amber transition-colors"
                       required
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[10px] font-bold text-stone-500 uppercase tracking-wider">City</label>
+                    <label className="text-[10px] font-bold text-stone-500 uppercase tracking-wider">{t('cityLabel')}</label>
                     <input 
                       type="text" 
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
-                      placeholder="Boston" 
+                      placeholder={t('cityPlaceholder')} 
                       className="w-full bg-white border border-coffee-latte/80 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-coffee-amber transition-colors"
                       required
                     />
@@ -365,7 +367,7 @@ export const CartPage = () => {
               {/* Payment Methods */}
               <div className="space-y-2">
                 <label className="text-[10px] font-bold text-stone-500 uppercase tracking-wider flex items-center gap-1">
-                  <CreditCard className="size-3.5" /> Payment Method
+                  <CreditCard className="size-3.5" /> {t('paymentMethod')}
                 </label>
                 <div className="grid grid-cols-2 gap-3">
                   <label className={`flex items-center justify-center gap-2 border rounded-xl p-3 cursor-pointer transition-all duration-300 text-xs font-semibold ${
@@ -381,7 +383,7 @@ export const CartPage = () => {
                       onChange={() => setPaymentMethod('COD')}
                       className="sr-only"
                     />
-                    COD
+                    {t('codText')}
                   </label>
                   <label className={`flex items-center justify-center gap-2 border rounded-xl p-3 cursor-pointer transition-all duration-300 text-xs font-semibold ${
                     paymentMethod === 'Online' 
@@ -396,7 +398,7 @@ export const CartPage = () => {
                       onChange={() => setPaymentMethod('Online')}
                       className="sr-only"
                     />
-                    Online Card
+                    {t('onlineCard')}
                   </label>
                 </div>
               </div>
@@ -406,7 +408,7 @@ export const CartPage = () => {
                 disabled={isOrdering}
                 className="w-full bg-coffee-dark hover:bg-coffee-amber disabled:bg-stone-300 text-white font-extrabold text-sm py-4 rounded-full transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2 mt-4 cursor-pointer animate-pulse"
               >
-                {isOrdering ? 'Processing...' : 'CONFIRM ORDER'}
+                {isOrdering ? (lang === 'vi' ? 'Đang xử lý...' : 'Processing...') : t('btnOrder')}
                 <ArrowRight className="size-4" />
               </button>
             </form>

@@ -62,6 +62,7 @@ const TRANSLATIONS = {
     // Cart Page
     shoppingCart: 'Giỏ Hàng Của Bạn',
     emptyCart: 'Giỏ hàng của bạn đang trống.',
+    emptyCartDesc: 'Hãy thêm một số loại cà phê specialty hoặc dụng cụ pha chế cao cấp từ cửa hàng của chúng tôi.',
     orderSummary: 'Tóm Tắt Đơn Hàng',
     subtotal: 'Tạm tính',
     grandTotal: 'Tổng cộng',
@@ -80,6 +81,14 @@ const TRANSLATIONS = {
     orderSuccessDesc: 'Cảm ơn bạn đã mua sắm tại Daily Grind.',
     totalPaid: 'Tổng tiền đã thanh toán',
     backToHome: 'Quay về trang chủ',
+    shippingDetails: 'Thông tin nhận hàng',
+    paymentMethod: 'Phương thức thanh toán',
+    itemsCount: 'sản phẩm',
+    orderId: 'Mã đơn hàng',
+    recipientName: 'Tên người nhận',
+    onlineCard: 'Thẻ Online',
+    codText: 'Thanh toán COD',
+    continueShopping: 'Tiếp tục mua hàng',
     
     // Auth Pages
     createAccount: 'Tạo tài khoản mới',
@@ -158,6 +167,7 @@ const TRANSLATIONS = {
     // Cart Page
     shoppingCart: 'Your Shopping Cart',
     emptyCart: 'Your cart is empty.',
+    emptyCartDesc: 'Add some specialty coffee or premium brewing gear from our shop.',
     orderSummary: 'Order Summary',
     subtotal: 'Subtotal',
     grandTotal: 'Grand Total',
@@ -176,6 +186,14 @@ const TRANSLATIONS = {
     orderSuccessDesc: 'Thank you for shopping at Daily Grind.',
     totalPaid: 'Total Paid',
     backToHome: 'Back to Home',
+    shippingDetails: 'Shipping Details',
+    paymentMethod: 'Payment Method',
+    itemsCount: 'items',
+    orderId: 'Order ID',
+    recipientName: 'Recipient Name',
+    onlineCard: 'Online Card',
+    codText: 'Cash on Delivery (COD)',
+    continueShopping: 'Continue shopping',
     
     // Auth Pages
     createAccount: 'Create account',
