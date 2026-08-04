@@ -60,7 +60,7 @@ export const getProductById = async (req: Request, res: Response) => {
     const { id } = req.params;
 
     // Kiểm tra xem ID có đúng định dạng MongoDB ObjectId không
-    if (!mongoose.Types.ObjectId.isValid(id)) {
+    if (typeof id !== 'string' || !mongoose.Types.ObjectId.isValid(id)) {
       return res.status(404).json({ message: 'Không tìm thấy sản phẩm (ID không hợp lệ)' });
     }
 

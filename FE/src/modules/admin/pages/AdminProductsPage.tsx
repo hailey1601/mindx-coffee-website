@@ -136,7 +136,7 @@ export const AdminProductsPage: React.FC = () => {
               placeholder="Tìm kiếm theo tên sản phẩm..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-9 bg-stone-50 border-stone-200"
+              className="pl-9 bg-stone-50 border-stone-200 text-stone-900"
             />
           </div>
           <select
@@ -278,6 +278,7 @@ export const AdminProductsPage: React.FC = () => {
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="Ví dụ: Ethiopia Yirgacheffe Special"
+                  className="bg-stone-50 border-stone-200 text-stone-900 focus-visible:ring-coffee-amber"
                 />
               </div>
 
@@ -318,6 +319,7 @@ export const AdminProductsPage: React.FC = () => {
                     required
                     value={formData.price}
                     onChange={(e) => setFormData({ ...formData, price: parseFloat(e.target.value) || 0 })}
+                    className="bg-stone-50 border-stone-200 text-stone-900 focus-visible:ring-coffee-amber"
                   />
                 </div>
 
@@ -329,6 +331,7 @@ export const AdminProductsPage: React.FC = () => {
                     required
                     value={formData.stock}
                     onChange={(e) => setFormData({ ...formData, stock: parseInt(e.target.value, 10) || 0 })}
+                    className="bg-stone-50 border-stone-200 text-stone-900 focus-visible:ring-coffee-amber"
                   />
                 </div>
               </div>
@@ -339,6 +342,7 @@ export const AdminProductsPage: React.FC = () => {
                   value={formData.imageUrl}
                   onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
                   placeholder="https://images.unsplash.com/..."
+                  className="bg-stone-50 border-stone-200 text-stone-900 focus-visible:ring-coffee-amber"
                 />
               </div>
 

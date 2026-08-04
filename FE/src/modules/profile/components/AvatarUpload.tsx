@@ -35,6 +35,7 @@ export const AvatarUpload = ({ currentAvatarUrl, userInitials = '??', onUploadSu
       const newUrl = (res.data as { avatarUrl: string }).avatarUrl;
       setPreviewUrl(newUrl);
       onUploadSuccess(newUrl);
+      window.dispatchEvent(new Event('user-change'));
       toast.success('Avatar updated successfully.');
     } catch (err: any) {
       toast.error(err?.response?.data?.message ?? 'Failed to upload avatar.');

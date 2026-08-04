@@ -20,12 +20,16 @@ export const AppLayout = () => {
   };
 
   useEffect(() => {
-    authApi.getMe()
-      .then((res) => setUser(res.data as CurrentUser))
-      .catch(() => {
-        tokenStore.clear();
-        navigate('/login');
-      });
+    const fetchUserData = () => {
+      authApi.getMe()
+        .then((res) => setUser(res.data as CurrentUser))
+        .catch(() => {
+          tokenStore.clear();
+          navigate('/login');
+        });
+    };
+
+    fetchUserData();
 
     const updateCount = () => {
       const items = cartStore.get();
@@ -35,7 +39,12 @@ export const AppLayout = () => {
 
     updateCount();
     window.addEventListener('cart-change', updateCount);
-    return () => window.removeEventListener('cart-change', updateCount);
+    window.addEventListener('user-change', fetchUserData);
+
+    return () => {
+      window.removeEventListener('cart-change', updateCount);
+      window.removeEventListener('user-change', fetchUserData);
+    };
   }, [navigate]);
 
   const handleLogout = () => {

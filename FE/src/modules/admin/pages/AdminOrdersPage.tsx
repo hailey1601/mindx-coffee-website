@@ -123,7 +123,7 @@ export const AdminOrdersPage: React.FC = () => {
               placeholder="Tìm theo Mã Đơn, Khách hàng, Email..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-9 bg-stone-50 border-stone-200"
+              className="pl-9 bg-stone-50 border-stone-200 text-stone-900"
             />
           </div>
           <select

@@ -39,7 +39,7 @@ const seedProducts = [
     price: 390000,
     stock: 30,
     description: 'Hạt Arabica trồng trên vùng đất núi lửa đặc thù. Mang hương vị phức hợp của khói nhẹ, gia vị, chocolate đen và độ chua tinh tế từ táo xanh.',
-    imageUrl: 'https://images.unsplash.com/photo-1506370408744-84d7293b61bf?q=80&w=800',
+    imageUrl: 'https://images.unsplash.com/photo-1447933601403-0c6688de566e?q=80&w=800',
     status: 'active' as const
   },
 
@@ -77,7 +77,7 @@ const seedProducts = [
     price: 950000,
     stock: 20,
     description: 'Ấm rót cổ ngỗng Hario Buono bằng inox cao cấp. Vòi rót uốn cong đặc trưng giúp kiểm soát tốc độ và vị trí dòng nước chảy cực kì chính xác.',
-    imageUrl: 'https://images.unsplash.com/photo-1595434061149-868752a2130a?q=80&w=800&auto=format&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1608686207856-001b95cf60ca?q=80&w=800',
     status: 'active' as const
   },
 
